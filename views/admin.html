@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+
+    <!-- Fonts & Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../design/admin.css" />
+  </head>
+
+  <body>
+    <!-- ==========================
+         Sidebar
+    =========================== -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../assets/sasivy.png" class="sidebar-logo" />
+        <h2>DoughMain</h2>
+      </div>
+
+      <nav class="sidebar-menu">
+        <div class="menu-item active" data-page="dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </div>
+
+        <div class="menu-item has-submenu">
+          <i class="fas fa-box"></i>
+          <span>Inventory</span>
+          <span class="menu-arrow">▶</span>
+        </div>
+
+        <div class="submenu">
+          <div class="submenu-item" data-page="overview">
+            <i class="fas fa-chart-bar"></i>
+            <span>Overview</span>
+          </div>
+          <div class="submenu-item" data-page="items">
+            <i class="fas fa-list"></i>
+            <span>Items</span>
+          </div>
+          <div class="submenu-item" data-page="stock-management">
+            <i class="fas fa-boxes-stacked"></i>
+            <span>Manage Stock</span>
+          </div>
+        </div>
+
+        <div class="menu-item has-submenu">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Orders</span>
+          <span class="menu-arrow">▶</span>
+        </div>
+
+        <div class="submenu">
+          <div class="submenu-item" data-page="order-history">
+            <i class="fas fa-clock-rotate-left"></i>
+            <span>Order History</span>
+          </div>
+          <div class="submenu-item" data-page="returns-damaged">
+            <i class="fas fa-undo-alt"></i>
+            <span>Returns / Damaged</span>
+          </div>
+          <div class="submenu-item" data-page="delivery">
+            <i class="fas fa-truck"></i>
+            <span>Delivery</span>
+          </div>
+        </div>
+
+        <div class="menu-item has-submenu">
+          <i class="fas fa-users"></i>
+          <span>Users</span>
+          <span class="menu-arrow">▶</span>
+        </div>
+
+        <div class="submenu">
+          <div class="submenu-item" data-page="manage-users">
+            <i class="fas fa-user-cog"></i>
+            <span>Manage</span>
+          </div>
+          <div class="submenu-item" data-page="pending-verification">
+            <i class="fas fa-user-clock"></i>
+            <span>Pending</span>
+          </div>
+        </div>
+
+        <div class="menu-item" data-page="reports">
+          <i class="fas fa-file-alt"></i>
+          <span>Reports</span>
+        </div>
+        <div class="menu-item" data-page="profile">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ==========================
+         Main Content
+    =========================== -->
+    <main class="main-content">
+      <header class="header">
+        <h1>Dashboard</h1>
+        <p id="date"></p>
+      </header>
+
+      <!-- ==========================
+           Dashboard Cards
+      =========================== -->
+      <section class="page-content active" id="dashboard-page">
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Active Resellers</div>
+            </div>
+            <div class="card-value" id="activeResellers">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Sales</div>
+            </div>
+            <div class="card-value" id="totalSales">₱0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Low Stock Items</div>
+            </div>
+            <div class="card-value" id="lowStock">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Pending Orders</div>
+            </div>
+            <div class="card-value" id="pendingOrders">0</div>
+          </div>
+        </div>
+
+<div class="table-container">
+  <div class="table-header">
+    <div class="table-title">Recent Orders</div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="recentOrdersTableBody">
+      <tr>
+        <td colspan="5" style="text-align:center;">Loading recent orders...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+      </section>
+
+      <!-- ==========================
+           Inventory Overview
+      =========================== -->
+      <section class="page-content" id="overview-page">
+        <div class="overview-cards">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Products</div>
+            </div>
+            <div class="card-value" id="totalProducts">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Orders</div>
+            </div>
+            <div class="card-value" id="totalOrders">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Out of Stock Items</div>
+            </div>
+            <div class="card-value" id="outOfStockItems">0</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Total Products Value</div>
+            </div>
+            <div class="card-value" id="totalProductsValue">₱0.00</div>
+          </div>
+        </div>
+
+        <div class="charts">
+          <div class="chart-container">
+            <canvas id="inventoryTypeChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <canvas id="topProductsChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+<!-- Inventory Items -->
+<section class="page-content" id="items-page">
+ <div id="toggleItemsPage">
+    <button id="toggleProducts">Products</button>
+    <button id="toggleIngredients">Ingredients</button>
+ </div>
+
+  <!-- Products Section -->
+  <div id="products-section">
+    <div class="section-header">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="productSearch" placeholder="Search products..." onkeyup="searchProducts()">
+      </div>
+      
+      <div class="filter-controls">
+        <select id="statusFilter" onchange="filterProducts()">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Out of Stock">Out of Stock</option>
+          <option value="Discontinued">Discontinued</option>
+        </select>
+        
+        <select id="stockFilter" onchange="filterProducts()">
+          <option value="">All Stock</option>
+          <option value="low">Low Stock</option>
+          <option value="out">Out of Stock</option>
+          <option value="in">In Stock</option>
+        </select>
+        
+        <button class="btn-primary" onclick="openAddProductModal()">
+          <i class="fas fa-plus"></i> Add Product
+        </button>
+      </div>
+    </div>
+
+    <!-- Products Table -->
+    <div class="table-container">
+      <table id="productsTable">
+        <thead>
+          <tr>
+             <th>Product ID</th> 
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Status</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="productsTableBody">
+          <tr>
+            <td colspan="8" style="text-align:center;">Loading products...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Ingredients Section -->
+  <div id="ingredients-section" style="display: none;">
+    <div class="section-header">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="ingredientSearch" placeholder="Search ingredients..." onkeyup="searchIngredients()">
+      </div>
+      
+      <div class="filter-controls">
+        <select id="ingredientStockFilter" onchange="filterIngredients()">
+          <option value="">All Stock</option>
+          <option value="low">Low Stock</option>
+          <option value="out">Out of Stock</option>
+          <option value="in">In Stock</option>
+        </select>
+        
+        <button class="btn-primary" onclick="openAddIngredientModal()">
+          <i class="fas fa-plus"></i> Add Ingredient
+        </button>
+      </div>
+    </div>
+
+    <!-- Ingredients Table -->
+    <div class="table-container">
+      <table id="ingredientsTable">
+        <thead>
+          <tr>
+            <th>Ingredients ID</th>
+            <th>Ingredient Name</th>
+            <th>Unit</th>
+            <th>Current Stock</th>
+            <th>Reorder Level</th>
+            <th>Cost per Unit</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ingredientsTableBody">
+          <tr>
+            <td colspan="7" style="text-align:center;">Loading ingredients...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Stock Management -->
+<!-- Stock Movements -->
+<section class="page-content" id="stock-management-page">
+
+
+  <div class="section-header">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="movementSearch" placeholder="Search name or type..." onkeyup="searchMovements()">
+    </div>
+    
+    <div class="filter-controls">
+      <select id="movementTypeFilter" onchange="filterMovements()">
+        <option value="">All Types</option>
+        <option value="Sale">Sales</option>
+        <option value="Production">Production</option>
+        <option value="Adjustment">Adjustment</option>
+        <option value="Spoilage">Spoilage</option>
+        <option value="Return">Returns</option>
+      </select>
+      
+      <select id="itemTypeFilter" onchange="filterMovements()">
+        <option value="">All Items</option>
+        <option value="Product">Products</option>
+        <option value="Ingredient">Ingredients</option>
+      </select>
+      
+      <button class="btn-primary" onclick="openAddMovementModal()">
+        <i class="fas fa-plus"></i> Add Movement
+      </button>
+    </div>
+  </div>
+
+  <!-- Stock Movements Table -->
+  <div class="table-container">
+    <table id="movementsTable">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Type</th>
+          <th>Movement Type</th>
+          <th>Quantity Change</th>
+          <th>Stock Before</th>
+          <th>Stock After</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="movementsTableBody">
+        <tr>
+          <td colspan="7" style="text-align:center;">Loading stock movements...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+      <!-- Users -->
+<!-- Manage Users Section -->
+<section class="page-content" id="manage-users-page">
+  <div class="section-header">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="userSearch" placeholder="Search users..." onkeyup="searchUsers()">
+    </div>
+    
+    <div class="filter-controls">
+      <select id="roleFilter" onchange="filterUsers()">
+        <option value="">All Roles</option>
+        <option value="Admin">Admin</option>
+        <option value="Cashier">Cashier</option>
+        <option value="Reseller">Reseller</option>
+      </select>
+      
+      <select id="statusFilter" onchange="filterUsers()">
+        <option value="">All Status</option>
+        <option value="Active">Active</option>
+        <option value="Verified">Verified</option>
+        <option value="Inactive">Inactive</option>
+        <option value="Suspended">Suspended</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+      
+      <!-- Add User Button - Only show for Admin/Cashier with proper credentials -->
+      <button class="btn-primary" id="addUserBtn" onclick="openAddUserModal()">
+Add User
+      </button>
+    </div>
+  </div>
+
+
+
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Contact</th>
+          <th>Address</th>
+          <th>Created Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="usersTableBody">
+        <tr>
+          <td colspan="9" style="text-align:center;">Click "Manage" in sidebar to load users</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+<!-- Pending Verification Section -->
+<section class="page-content" id="pending-verification-page">
+  <div class="section-header">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="pendingSearch" placeholder="Search pending users..." onkeyup="searchPendingUsers()">
+    </div>
+    
+    <div class="filter-controls">
+      <select id="pendingRoleFilter" onchange="filterPendingUsers()">
+        <option value="">All Roles</option>
+        <option value="Admin">Admin</option>
+        <option value="Cashier">Cashier</option>
+        <option value="Reseller">Reseller</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Contact</th>
+          <th>Address</th>
+          <th>Registration Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="pendingUsersTableBody">
+        <tr>
+          <td colspan="8" style="text-align:center;">Click "Pending" in sidebar to load pending users</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="page-content" id="reports-page">
+    <div class="sample-content">
+        <!-- Quick Stats Table with Dropdown Filter on same line -->
+        <div class="table-container">
+            <div class="table-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <div class="table-title" style="font-size: 18px; font-weight: 600;">Quick Stats</div>
+                <div class="period-filter" style="display: flex; gap: 8px; align-items: center;">
+                    <select id="periodFilter" class="period-dropdown">
+                        <option value="week">Week</option>
+                        <option value="month" selected>Month</option>
+                        <option value="quarter">Quarter</option>
+                        <option value="year">Year</option>
+                    </select>
+                </div>
+            </div>
+            <table id="quick-stats-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th id="current-period-header">This Month</th>
+                        <th id="previous-period-header">Last Month</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody id="quick-stats-body">
+                    <tr>
+                        <td>Total Sales</td>
+                        <td id="current-sales">₱48,820</td>
+                        <td id="previous-sales">₱40,900</td>
+                        <td id="sales-change"><span class="change-text change-positive">+12%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Orders Completed</td>
+                        <td id="current-orders">142</td>
+                        <td id="previous-orders">131</td>
+                        <td id="orders-change"><span class="change-text change-positive">+8%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Reseller Orders</td>
+                        <td id="current-reseller">92</td>
+                        <td id="previous-reseller">85</td>
+                        <td id="reseller-change"><span class="change-text change-positive">+8%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Walk-in Orders</td>
+                        <td id="current-walkin">50</td>
+                        <td id="previous-walkin">46</td>
+                        <td id="walkin-change"><span class="change-text change-positive">+9%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Charts Section - CORRECTED POSITIONS -->
+        <div class="charts-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+            <!-- Top Row -->
+            <div class="chart-card">
+         
+                <canvas id="salesTrendChart" height="250"></canvas> <!-- Top-left: Monthly Sales Trend -->
+            </div>
+            <div class="chart-card">
+          
+                <canvas id="customerTypesChart" height="250"></canvas> <!-- Top-right: Sales by Customer Type -->
+            </div>
+            
+            <!-- Bottom Row -->
+            <div class="chart-card">
+        
+                <canvas id="salesPerformanceChart" height="250"></canvas> <!-- Bottom-left: Daily Sales Performance -->
+            </div>
+            <div class="chart-card">
+             
+                <canvas id="orderStatusChart" height="250"></canvas> <!-- Bottom-right: Order Status Distribution -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Returns / Damaged -->
+<section class="page-content" id="returns-damaged-page">
+  <div class="section-header">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="returnsSearch" placeholder="Search returns..." onkeyup="searchReturns()">
+    </div>
+    
+    <div class="filter-controls">
+      <select id="returnsStatusFilter" onchange="filterReturns()">
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Processing">Processing</option>
+        <option value="Completed">Completed</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+      
+      <select id="returnsReasonFilter" onchange="filterReturns()">
+        <option value="">All Reasons</option>
+        <option value="Damaged">Damaged</option>
+        <option value="Expired">Expired</option>
+        <option value="Wrong Item">Wrong Item</option>
+        <option value="Customer Change Mind">Customer Change Mind</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Returns Table -->
+  <div class="table-container">
+    <table id="returnsTable">
+      <thead>
+        <tr>
+          <th>Return ID</th>
+          <th>Order #</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Reason</th>
+          <th>Action Taken</th>
+          <th>Refund Amount</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="returnsTableBody">
+        <tr>
+          <td colspan="10" style="text-align:center;">Loading returns...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- View Return Details Modal -->
+<div id="viewReturnModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Return Details</h3>
+      <span class="close-modal" onclick="closeViewReturnModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div id="returnDetailsContent">
+        <!-- Return details will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addReturnModal" class="modal">
+  <div class="modal-content modal-wide">
+    <div class="modal-header">
+      <h3>Add New Return</h3>
+      <span class="close-modal" onclick="closeAddReturnModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="addReturnForm" onsubmit="submitReturnForm(event)">
+        <div class="form-row-layout">
+          <div class="form-column-main">
+            <div class="form-group">
+              <label for="returnOrder">Order *</label>
+              <select id="returnOrder" name="order_id" required onchange="loadOrderItems(this.value)">
+                <option value="">Select Order</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="returnProduct">Product *</label>
+              <select id="returnProduct" name="product_id" required>
+                <option value="">Select Product</option>
+              </select>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="returnQuantity">Quantity *</label>
+                <input type="number" id="returnQuantity" name="quantity" min="1" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="returnReason">Reason *</label>
+                <select id="returnReason" name="return_reason" required>
+                  <option value="">Select Reason</option>
+                  <option value="Damaged">Damaged</option>
+                  <option value="Expired">Expired</option>
+                  <option value="Wrong Item">Wrong Item</option>
+                  <option value="Customer Change Mind">Customer Change Mind</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="returnAction">Action Taken *</label>
+                <select id="returnAction" name="action_taken" required onchange="toggleRefundAmount()">
+                  <option value="">Select Action</option>
+                  <option value="Refund">Refund</option>
+                  <option value="Replace">Replace</option>
+                </select>
+              </div>
+              
+              <div class="form-group" id="refundAmountGroup" style="display: none;">
+                <label for="returnRefundAmount">Refund Amount (₱)</label>
+                <input type="number" id="returnRefundAmount" name="refund_amount" step="0.01" min="0">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="returnNotes">Notes</label>
+              <textarea id="returnNotes" name="notes" rows="3" placeholder="Add any additional notes..."></textarea>
+            </div>
+          </div>
+          
+          <div class="form-column-side">
+            <div class="info-card">
+              <div class="info-card-header">
+                <i class="fas fa-info-circle"></i>
+                <span>Order Information</span>
+              </div>
+              <div class="info-card-content">
+                <div class="info-item">
+                  <span class="info-label">Order Total:</span>
+                  <span class="info-value" id="orderTotalInfo">₱0.00</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Customer:</span>
+                  <span class="info-value" id="customerInfo">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Order Date:</span>
+                  <span class="info-value" id="orderDateInfo">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddReturnModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Process Return</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- View Return Details Modal -->
+<div id="viewReturnModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Return Details</h3>
+      <span class="close-modal" onclick="closeViewReturnModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div id="returnDetailsContent">
+        <!-- Return details will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- Delivery -->
+<section class="page-content" id="delivery-page">
+  <!-- Search and Filter Row -->
+  <div class="search-filter-row">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="deliverySearch" placeholder="Search by order, driver, or recipient..." onkeyup="searchDeliveries()">
+    </div>
+    
+    <div class="filter-controls">
+      <select id="deliveryStatusFilter" onchange="filterDeliveries()">
+        <option value="">All Status</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Out for Delivery">Out for Delivery</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Failed">Failed</option>
+        <option value="Returned">Returned</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      
+      
+      <button class="btn-primary" onclick="openScheduleDeliveryModal()">
+        <i class="fas fa-plus"></i> Estimated Delivery
+      </button>
+    </div>
+  </div>
+
+  <!-- Active Filters Display -->
+  <div class="active-filters" id="deliveryActiveFilters">
+    <!-- Active filters will appear here -->
+  </div>
+
+  <!-- Deliveries Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+     <tr>
+    <th>Order #</th>
+    <th>Driver</th>
+    <th>Recipient</th>
+    <th>Contact</th>
+    <th>Scheduled Date</th>
+    <th>Status</th>
+    <th>Cash Collected</th>
+    <th>Actions</th>
+</tr>
+      </thead>
+      <tbody id="deliveriesTableBody">
+        <tr>
+          <td colspan="9" style="text-align:center;">Loading deliveries...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Schedule Delivery Modal -->
+<div id="scheduleDeliveryModal" class="modal">
+  <div class="modal-content modal-wide">
+    <div class="modal-header">
+      <h3>Schedule New Delivery</h3>
+      <span class="close-modal" onclick="closeScheduleDeliveryModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="scheduleDeliveryForm" onsubmit="submitDeliverySchedule(event)">
+        <div class="form-row-layout">
+          <div class="form-column-main">
+            <div class="form-group">
+              <label for="deliveryOrder">Select Packed Order *</label>
+              <select id="deliveryOrder" name="order_id" required onchange="loadOrderDeliveryInfo(this.value)">
+                <option value="">Select Packed Order</option>
+              </select>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="deliveryDriver">Driver Name *</label>
+                <input type="text" id="deliveryDriver" name="driver_name" required placeholder="Enter driver name">
+              </div>
+              
+              <div class="form-group">
+                <label for="deliveryDate">Scheduled Date *</label>
+                <input type="datetime-local" id="deliveryDate" name="scheduled_date" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="recipientName">Recipient Name *</label>
+                <input type="text" id="recipientName" name="recipient_name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="recipientContact">Recipient Contact *</label>
+                <input type="text" id="recipientContact" name="recipient_contact" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="deliveryNotes">Delivery Notes</label>
+              <textarea id="deliveryNotes" name="notes" rows="3" placeholder="Any special delivery instructions..."></textarea>
+            </div>
+          </div>
+          
+          <div class="form-column-side">
+            <div class="info-card">
+              <div class="info-card-header">
+                <i class="fas fa-info-circle"></i>
+                <span>Order Information</span>
+              </div>
+              <div class="info-card-content">
+                <div class="info-item">
+                  <span class="info-label">Customer:</span>
+                  <span class="info-value" id="deliveryCustomerInfo">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Contact:</span>
+                  <span class="info-value" id="deliveryContactInfo">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Address:</span>
+                  <span class="info-value" id="deliveryAddressInfo">-</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Total Amount:</span>
+                  <span class="info-value" id="deliveryAmountInfo">₱0.00</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">Payment Status:</span>
+                  <span class="info-value" id="deliveryPaymentInfo">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeScheduleDeliveryModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Schedule Delivery</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Order History -->
+<section class="page-content" id="order-history-page">
+
+  <!-- Search and Filter Row -->
+  <div class="search-filter-row">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="orderSearch" placeholder="Search by order or customer...">
+    </div>
+    
+    <div style="position: relative;">
+      <button class="filter-button" id="filterToggle">
+        <i class="fas fa-filter"></i>
+        Filter
+      </button>
+      
+      <!-- Filter Modal -->
+      <div class="filter-modal" id="filterModal">
+        <div class="filter-group-grid">
+          <div class="filter-group">
+            <label>Order Status</label>
+            <select id="orderStatusFilter">
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Packed">Packed</option>
+              <option value="Out for Delivery">Out for Delivery</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Payment Status</label>
+            <select id="paymentStatusFilter">
+              <option value="">All Payment</option>
+              <option value="Pending">Pending</option>
+              <option value="Paid">Paid</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Order Type</label>
+            <select id="orderTypeFilter">
+              <option value="">All Types</option>
+              <option value="Walk-in">Walk-in</option>
+              <option value="Reseller">Reseller</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label>Date Range</label>
+            <select id="dateRangeFilter">
+              <option value="">All Time</option>
+              <option value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="custom">Custom Range</option>
+            </select>
+          </div>
+          
+          <div class="filter-group-full" id="customDateRange" style="display: none;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <label>From Date</label>
+                <input type="date" id="dateFromFilter">
+              </div>
+              <div>
+                <label>To Date</label>
+                <input type="date" id="dateToFilter">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="filter-actions">
+          <button class="btn-clear" onclick="clearAllFilters()">
+            Clear All
+          </button>
+          <button class="btn-apply" onclick="applyFilters()">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Active Filters Display -->
+  <div class="active-filters" id="activeFilters">
+    <!-- Active filters will appear here -->
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-container">
+   
+    <table>
+      
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Order Date</th>
+          <th>Customer</th>
+          <th>Total Amount</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Received By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="ordersTableBody">
+        <tr>
+          <td colspan="9" style="text-align:center;">Loading orders...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+    <!-- Replace the current profile section in admin.html -->
+<!-- Replace your entire profile section with this -->
+<section class="page-content" id="profile-page">
+  <div class="profile-container">
+    <div class="profile-content">
+      <div class="profile-image-section">
+        <div class="profile-image-container">
+          <img id="adminProfileImage" src="../uploads/default_admin.png" alt="Profile" class="profile-image">
+          <div class="profile-image-actions">
+            <button class="btn-upload" onclick="triggerImageUpload()" id="changePhotoBtn" disabled>
+              Change Photo
+            </button>
+              <button class="btn-logout" onclick="logoutAdmin()" id="logoutBtn">
+            Log Out
+            </button>
+            <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
+          </div>
+        </div>
+      </div>
+
+      <form id="profileForm" class="profile-form" novalidate>
+        <div class="form-section">
+          <div class="section-header-row">
+            <h3>Basic Information</h3>
+            <button type="button" class="btn-primary" id="editProfileBtn" onclick="enableEditing()">
+              Edit
+            </button>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="role">Role</label>
+              <input type="text" id="role" name="role" value="Admin" readonly class="readonly-field">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" name="first_name" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" name="last_name" readonly class="readonly-field">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="contactNumber">Contact Number</label>
+              <input type="tel" id="contactNumber" name="contact_number" readonly class="readonly-field">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Delivery Address</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="province">Province</label>
+              <input type="text" id="province" name="province" value="Bulacan" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="municipality">Municipality *</label>
+              <select id="municipality" name="municipality" readonly class="readonly-field" onchange="loadBarangays()">
+                <option value="">Select Municipality</option>
+                <option value="Malolos">Malolos</option>
+                <option value="Marilao">Marilao</option>
+                <option value="Meycauayan">Meycauayan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="barangay">Barangay *</label>
+              <select id="barangay" name="barangay" readonly class="readonly-field">
+                <option value="">Select Barangay</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="streetName">Street Name</label>
+              <input type="text" id="streetName" name="street_name" readonly class="readonly-field">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="houseNumber">House Number</label>
+              <input type="text" id="houseNumber" name="house_number" readonly class="readonly-field">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Security</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input type="password" id="currentPassword" name="current_password" placeholder="Enter current password" readonly class="readonly-field">
+            </div>
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input type="password" id="newPassword" name="new_password" placeholder="Enter new password" readonly class="readonly-field">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password</label>
+              <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm new password" readonly class="readonly-field">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions" id="saveCancelSection" style="display: none;">
+          <button type="button" class="btn-cancel" onclick="cancelEditing()">Cancel</button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+    </main>
+<!-- ==========================
+     Add Product Modal
+=========================== -->
+<div id="addProductModal" class="modal">
+  <div class="modal-content modal-wide">
+    <div class="modal-header">
+      <h3>Add New Product</h3>
+      <span class="close-modal" onclick="closeAddProductModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="addProductForm" onsubmit="submitProductForm(event)">
+        <div class="form-row-layout">
+          <div class="form-column-main">
+            <div class="form-group">
+              <label for="productName">Product Name *</label>
+              <input type="text" id="productName" name="productName" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="productDescription">Description</label>
+              <textarea id="productDescription" name="productDescription" rows="3"></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productPrice">Price (₱) *</label>
+                <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="productCost">Cost Price (₱) *</label>
+                <input type="number" id="productCost" name="productCost" step="0.01" min="0" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="productStock">Initial Stock *</label>
+                <input type="number" id="productStock" name="productStock" min="0" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="productMinStock">Minimum Stock Level *</label>
+                <input type="number" id="productMinStock" name="productMinStock" min="0" value="5" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="productStatus">Status *</label>
+              <select id="productStatus" name="productStatus" required>
+                <option value="Active">Active</option>
+                <option value="Out of Stock">Out of Stock</option>
+                <option value="Discontinued">Discontinued</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-column-image">
+            <label for="productImageUpload">Product Image</label>
+            <div class="image-upload-container">
+              <div class="image-preview" id="addImagePreview">
+                <img id="addImagePreviewImg" src="" alt="Preview">
+                <div class="image-preview-text" id="addImagePreviewText">
+           
+                  <span>No image selected</span>
+                </div>
+              </div>
+              <input type="file" id="productImageUpload" name="productImage" accept="image/*" class="file-input-hidden" onchange="previewImage(this, 'add')">
+              <button type="button" class="btn-upload" onclick="document.getElementById('productImageUpload').click()">
+ Choose Image
+              </button>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddProductModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Add Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================
+     Edit Product Modal
+=========================== -->
+<div id="editProductModal" class="modal">
+  <div class="modal-content modal-wide">
+    <div class="modal-header">
+      <h3>Edit Product</h3>
+      <span class="close-modal" onclick="closeEditProductModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="editProductForm" onsubmit="submitEditProductForm(event)">
+        <input type="hidden" id="editProductId" name="productId">
+        
+        <div class="form-row-layout">
+          <div class="form-column-main">
+            <div class="form-group">
+              <label for="editProductName">Product Name *</label>
+              <input type="text" id="editProductName" name="productName" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="editProductDescription">Description</label>
+              <textarea id="editProductDescription" name="productDescription" rows="3"></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="editProductPrice">Price (₱) *</label>
+                <input type="number" id="editProductPrice" name="productPrice" step="0.01" min="0" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="editProductCost">Cost Price (₱) *</label>
+                <input type="number" id="editProductCost" name="productCost" step="0.01" min="0" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="editProductStock">Current Stock *</label>
+                <input type="number" id="editProductStock" name="productStock" min="0" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="editProductMinStock">Minimum Stock Level *</label>
+                <input type="number" id="editProductMinStock" name="productMinStock" min="0" required>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="editProductStatus">Status *</label>
+              <select id="editProductStatus" name="productStatus" required>
+                <option value="Active">Active</option>
+                <option value="Out of Stock">Out of Stock</option>
+                <option value="Discontinued">Discontinued</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-column-image">
+            <label for="editProductImageUpload">Product Image</label>
+            <div class="image-upload-container">
+              <div class="image-preview" id="editImagePreview">
+                <img id="editImagePreviewImg" src="" alt="Preview">
+                <div class="image-preview-text" id="editImagePreviewText">
+              
+                  <span>No image selected</span>
+                </div>
+              </div>
+              <input type="file" id="editProductImageUpload" name="productImage" accept="image/*" class="file-input-hidden" onchange="previewImage(this, 'edit')">
+              <button type="button" class="btn-upload" onclick="document.getElementById('editProductImageUpload').click()">
+              Change Image
+              </button>
+              <div class="upload-info">
+                <small>Supported: JPG, PNG, WebP</small>
+                <small>Max size: 2MB</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeEditProductModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Update Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================
+     Add Ingredient Modal
+=========================== -->
+<div id="addIngredientModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Add New Ingredient</h3>
+      <span class="close-modal" onclick="closeAddIngredientModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="addIngredientForm" onsubmit="submitIngredientForm(event)">
+        <div class="form-group">
+          <label for="ingredientName">Ingredient Name *</label>
+          <input type="text" id="ingredientName" name="ingredientName" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ingredientUnit">Unit *</label>
+            <select id="ingredientUnit" name="ingredientUnit" required>
+              <option value="kg">Kilogram (kg)</option>
+              <option value="g">Gram (g)</option>
+              <option value="liter">Liter</option>
+              <option value="ml">Milliliter (ml)</option>
+              <option value="pcs">Pieces</option>
+              <option value="bottle">Bottle</option>
+              <option value="pack">Pack</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="ingredientCost">Cost per Unit (₱) *</label>
+            <input type="number" id="ingredientCost" name="ingredientCost" step="0.01" min="0" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ingredientStock">Current Stock *</label>
+            <input type="number" id="ingredientStock" name="ingredientStock" step="0.01" min="0" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="ingredientReorder">Reorder Level *</label>
+            <input type="number" id="ingredientReorder" name="ingredientReorder" step="0.01" min="0" required>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddIngredientModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Add Ingredient</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================
+     Edit Ingredient Modal
+=========================== -->
+<div id="editIngredientModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Edit Ingredient</h3>
+      <span class="close-modal" onclick="closeEditIngredientModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="editIngredientForm" onsubmit="submitEditIngredientForm(event)">
+        <input type="hidden" id="editIngredientId" name="ingredientId">
+        
+        <div class="form-group">
+          <label for="editIngredientName">Ingredient Name *</label>
+          <input type="text" id="editIngredientName" name="ingredientName" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editIngredientUnit">Unit *</label>
+            <select id="editIngredientUnit" name="ingredientUnit" required>
+              <option value="kg">Kilogram (kg)</option>
+              <option value="g">Gram (g)</option>
+              <option value="liter">Liter</option>
+              <option value="ml">Milliliter (ml)</option>
+              <option value="pcs">Pieces</option>
+              <option value="bottle">Bottle</option>
+              <option value="pack">Pack</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="editIngredientCost">Cost per Unit (₱) *</label>
+            <input type="number" id="editIngredientCost" name="ingredientCost" step="0.01" min="0" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="editIngredientStock">Current Stock *</label>
+            <input type="number" id="editIngredientStock" name="ingredientStock" step="0.01" min="0" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="editIngredientReorder">Reorder Level *</label>
+            <input type="number" id="editIngredientReorder" name="ingredientReorder" step="0.01" min="0" required>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeEditIngredientModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Update Ingredient</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="addMovementModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Add Stock Movement</h3>
+      <span class="close-modal" onclick="closeAddMovementModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="addMovementForm" onsubmit="submitMovementForm(event)">
+        <div class="form-group">
+          <label for="movementItemType">Item Type *</label>
+          <select id="movementItemType" name="item_type" required onchange="loadItemsByType()">
+            <option value="">Select Type</option>
+            <option value="Product">Product</option>
+            <option value="Ingredient">Ingredient</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="movementItem">Item *</label>
+          <select id="movementItem" name="item_id" required onchange="updateStockInfo()">
+            <option value="">Select Item</option>
+          </select>
+        </div>
+
+        <div class="current-stock-info" id="currentStockInfo" style="display: none; margin-bottom: 15px;">
+          <div class="info-card">
+            <div class="info-card-header">
+              <i class="fas fa-box"></i>
+              <span>Current Stock</span>
+            </div>
+            <div class="info-card-content">
+              <div id="stockDetails"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="movementType">Movement Type *</label>
+          <select id="movementType" name="movement_type" required>
+            <option value="">Select Type</option>
+            <option value="Sale">Sale</option>
+            <option value="Production">Production</option>
+            <option value="Adjustment">Adjustment</option>
+            <option value="Spoilage">Spoilage</option>
+            <option value="Return">Return</option>
+            <option value="Restock">Restock</option>
+          </select>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="movementQuantity">Quantity Change *</label>
+            <input type="number" id="movementQuantity" name="quantity_change" step="0.01" required>
+            <small style="color: #666;">Use negative for decrease, positive for increase</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="movementReference">Reference Type</label>
+            <select id="movementReference" name="reference_type">
+              <option value="">No Reference</option>
+              <option value="Order">Order</option>
+              <option value="Production">Production Batch</option>
+              <option value="Adjustment">Stock Adjustment</option>
+              <option value="Manual">Manual Entry</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="movementNotes">Notes</label>
+          <textarea id="movementNotes" name="notes" rows="3" placeholder="Add any additional notes..."></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddMovementModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Add Movement</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add User Modal -->
+<div id="addUserModal" class="modal">
+  <div class="modal-content modal-wide">
+    <div class="modal-header">
+      <h3>Add New User</h3>
+      <span class="close-modal" onclick="closeAddUserModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="addUserForm" onsubmit="submitUserForm(event)">
+        <div class="form-row-layout">
+          <div class="form-column-main">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userFirstName">First Name *</label>
+                <input type="text" id="userFirstName" name="first_name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="userLastName">Last Name *</label>
+                <input type="text" id="userLastName" name="last_name" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userUsername">Username *</label>
+                <input type="text" id="userUsername" name="username" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="userEmail">Email *</label>
+                <input type="email" id="userEmail" name="email" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userPassword">Password *</label>
+                <input type="password" id="userPassword" name="password" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="userContact">Contact Number *</label>
+                <input type="tel" id="userContact" name="contact_number" required>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="userRole">Role *</label>
+                <select id="userRole" name="role" required>
+                  <option value="">Select Role</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Cashier">Cashier</option>
+                </select>
+              </div>
+              
+              
+            </div>
+          </div>
+          
+          <div class="form-column-side">
+            <div class="info-card">
+              <div class="info-card-header">
+                <i class="fas fa-info-circle"></i>
+                <span>Address Information</span>
+              </div>
+              <div class="info-card-content">
+                <div class="form-group">
+                  <label for="userProvince">Province *</label>
+                  <input type="text" id="userProvince" name="province" value="Bulacan" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="userMunicipality">Municipality *</label>
+                  <select id="userMunicipality" name="municipality" required>
+                    <option value="">Select Municipality</option>
+                    <option value="Malolos">Malolos</option>
+                    <option value="Marilao">Marilao</option>
+                    <option value="Meycauayan">Meycauayan</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="userBarangay">Barangay *</label>
+                  <select id="userBarangay" name="barangay" required>
+                    <option value="">Select Barangay</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="userStreet">Street Name *</label>
+                  <input type="text" id="userStreet" name="street_name" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="userHouseNumber">House Number *</label>
+                  <input type="text" id="userHouseNumber" name="house_number" required>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeAddUserModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Add User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div id="editUserModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Edit User Status</h3>
+      <span class="close-modal" onclick="closeEditUserModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <form id="editUserForm" onsubmit="submitEditUserForm(event)">
+        <input type="hidden" id="editUserId" name="userId">
+        
+        <div class="user-info-summary">
+          <div class="info-item">
+            <strong>Name:</strong> <span id="editUserName"></span>
+          </div>
+          <div class="info-item">
+            <strong>Username:</strong> <span id="editUserUsername"></span>
+          </div>
+          <div class="info-item">
+            <strong>Role:</strong> <span id="editUserRole"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="editUserStatus">Account Status *</label>
+          <select id="editUserStatus" name="account_status" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Suspended">Suspended</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeEditUserModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Update Status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================
+     View User Modal
+=========================== -->
+<div id="viewUserModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>User Details</h3>
+      <span class="close-modal" onclick="closeViewUserModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="user-details-grid">
+        <div class="detail-group">
+          <h4>Basic Information</h4>
+          <div class="detail-item">
+            <strong>Full Name:</strong> <span id="viewUserName"></span>
+          </div>
+          <div class="detail-item">
+            <strong>Username:</strong> <span id="viewUserUsername"></span>
+          </div>
+          <div class="detail-item">
+            <strong>Email:</strong> <span id="viewUserEmail"></span>
+          </div>
+          <div class="detail-item">
+            <strong>Contact:</strong> <span id="viewUserContact"></span>
+          </div>
+        </div>
+        
+        <div class="detail-group">
+          <h4>Account Information</h4>
+          <div class="detail-item">
+            <strong>Role:</strong> <span id="viewUserRole"></span>
+          </div>
+          <div class="detail-item">
+            <strong>Status:</strong> <span id="viewUserStatus"></span>
+          </div>
+          <div class="detail-item">
+            <strong>Registered:</strong> <span id="viewUserCreated"></span>
+          </div>
+        </div>
+        
+        <div class="detail-group full-width">
+          <h4>Address</h4>
+          <div class="detail-item">
+            <span id="viewUserAddress"></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn-primary" onclick="closeViewUserModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script src="../routes/manipulateUI/admin/adminUI.js" defer></script>
+    <script src="../routes/manipulateUI/admin/admin_dashboard.js" defer></script>
+<script src="../routes/manipulateUI/admin/admin_inventory.js" defer></script>
+<script src="../routes/manipulateUI/admin/admin_orders.js" defer></script>
+<script src="../routes/manipulateUI/admin/admin_profile.js" defer></script>
+<script src="../routes/manipulateUI/admin/admin_reports.js" defer></script>
+<script src="../routes/manipulateUI/admin/admin_users.js"defer></script>
+  </body>
+</html>

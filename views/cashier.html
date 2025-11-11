@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DoughMain - Cashier</title>
+  <link rel="stylesheet" href="/design/cashier.css" />
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <h1>DoughMain</h1>
+    <div class="profile">
+    
+      <img id="profileImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="profile-img">
+      <div class="profile-info">
+        <span id="cashierName" class="name">Name</span>
+        <span class="role">CASHIER</span>
+      </div>
+      <button id="menuBtn" class="menu-btn">⋮</button>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main">
+    <!-- LEFT: Bread Section -->
+    <section class="bread-section">
+      <div class="bread-header">
+        <h3>Available Breads</h3>
+        <div class="controls">
+          <input type="text" id="searchBar" placeholder=" Search breads..." />
+          <select id="sortFilter">
+            <option value="default">Sort by...</option>
+            <option value="az">A–Z</option>
+            <option value="za">Z–A</option>
+            <option value="low">Lowest Price</option>
+            <option value="high">Highest Price</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="breadContainer" class="bread-container">
+        <!-- dynamic product cards injected here -->
+      </div>
+    </section>
+
+    <!-- RIGHT: Order Section -->
+    <section class="order-section">
+      <!-- Order Header -->
+      <div class="order-header">
+        <h3>Current Order</h3>
+
+      </div>
+
+      <div class="bottom-section">
+        <div class="order-box">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Bread Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody id="orderList"></tbody>
+          </table>
+        </div>
+
+        <div class="order-bottom-section">
+          <div class="total-row">
+            <label>Total</label>
+            <span id="totalAmount">₱0.00</span>
+          </div>
+          <div class="total-row">
+            <label>Cash Given</label>
+            <input type="number" id="cashGiven" placeholder="Enter cash..." />
+          </div>
+          <div class="total-row">
+            <label>Change</label>
+            <span id="changeAmount">₱0.00</span>
+          </div>
+
+          <button id="placeOrder" class="place-order-btn">Place Order</button>
+                  <button id="clearOrder" class="clear-btn">Clear Order</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== QUANTITY MODAL ===== -->
+  <div id="quantityModal" class="modal">
+    <div class="modal-content">
+      <button id="closeModal" class="close-btn">×</button>
+      <h2 id="modalBreadName">Bread name</h2>
+      <div class="quantity-input">
+        <button id="decreaseQty" class="qty-btn">−</button>
+        <input type="number" id="quantityInput" min="1" value="1" />
+        <button id="increaseQty" class="qty-btn">+</button>
+      </div>
+      <button id="confirmAdd" class="modal-add-btn">Add</button>
+    </div>
+  </div>
+
+  <!-- ===== MENU MODAL ===== -->
+  <div id="menuModal" class="modal">
+    <div class="modal-content">
+      <h3> Menu</h3>
+      <button id="profileBtn"> Profile</button>
+      <button id="pendingBtn"> Pending Payment</button>
+      <button id="returnBtn"> Return Request</button>
+      <button id="logoutBtn"> Logout</button>
+      <button class="cancel" id="closeMenu"> Close</button>
+    </div>
+  </div>
+
+  <!-- ===== PROFILE MODAL ===== -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <h3>Profile Info</h3>
+      <img id="profileImagePreview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" width="90" height="90">
+      <input type="file" id="profileImageInput" accept="image/*"><br>
+      <input type="text" id="usernameInput" placeholder="Enter new username"><br>
+      <button id="saveProfile">Save</button>
+      <button id="resetProfile">Reset</button>
+      <button class="cancel" id="closeProfile">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== PENDING MODAL (placeholder) ===== -->
+<!-- ===== PENDING PAYMENTS MODAL ===== -->
+<div id="pendingModal" class="modal">
+  <div class="modal-content large-modal">
+    <div class="modal-header">
+      <h3> Pending Reseller Payments</h3>
+     <button class="close-btn" id="closePending" title="Close">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="table-container">
+        <table class="pending-orders-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Reseller</th>
+              <th>Contact</th>
+              <th>Total Amount</th>
+              <th>Order Date</th>
+              <th>Delivery Status</th>
+              <th>Driver</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pendingOrdersList">
+            <!-- Dynamic content will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="noPendingMessage" class="no-data-message">
+        <div class="no-data-icon"></div>
+        <p>No pending payments at the moment.</p>
+        <small>All reseller orders have been paid.</small>
+      </div>
+      
+      <div id="loadingMessage" class="loading-message">
+        <div class="loading-spinner"></div>
+        <p>Loading pending payments...</p>
+      </div>
+    </div>
+    
+   
+  </div>
+</div>
+  <!-- ===== LOGOUT MODAL ===== -->
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <h3>Log Out Confirmation</h3>
+      <p>Do you want to log out?</p>
+      <button id="confirmLogout">Yes</button>
+      <button class="cancel" id="cancelLogout">No</button>
+    </div>
+  </div>
+
+
+  <!-- ===== RETURN REQUEST FORM MODAL ===== -->
+<div id="returnRequestModal" class="modal">
+  <div class="modal-content medium-modal">
+    <div class="modal-header">
+      <h3>Submit Return Request</h3>
+      <button class="close-btn" id="closeReturnRequest" title="Close">×</button>
+    </div>
+    
+    <div class="modal-body">
+      <form id="returnRequestForm" class="return-form">
+        <div class="form-group">
+          <label for="orderNumber">Order Number *</label>
+          <input type="text" id="orderNumber" name="orderNumber" required 
+                 placeholder="Enter order ID (e.g., 1)">
+        </div>
+
+        <div class="form-group">
+          <label for="productSelect">Product *</label>
+          <select id="productSelect" name="product_id" required>
+            <option value="">Select a product</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="returnQuantity">Quantity *</label>
+          <div class="quantity-input">
+            <button type="button" id="decreaseReturnQty" class="qty-btn">−</button>
+            <input type="number" id="returnQuantity" name="quantity" min="1" value="1" required>
+            <button type="button" id="increaseReturnQty" class="qty-btn">+</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="returnReason">Return Reason *</label>
+          <select id="returnReason" name="return_reason" required>
+            <option value="">Select reason</option>
+            <option value="Damaged">Damaged Product</option>
+            <option value="Expired">Expired Product</option>
+            <option value="Wrong Item">Wrong Item Delivered</option>
+            <option value="Customer Change Mind">Customer Changed Mind</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="actionTaken">Action to Take *</label>
+          <select id="actionTaken" name="action_taken" required>
+            <option value="">Select action</option>
+            <option value="Refund">Refund</option>
+            <option value="Replace">Replace Product</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="refundAmountGroup" style="display: none;">
+          <label for="refundAmount">Refund Amount (₱)</label>
+          <input type="number" id="refundAmount" name="refund_amount" min="0" step="0.01" 
+                 placeholder="0.00" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="returnNotes">Notes (Optional)</label>
+          <textarea id="returnNotes" name="notes" rows="3" 
+                    placeholder="Additional details about the return..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancelReturn" class="cancel-btn">Cancel</button>
+          <button type="submit" id="submitReturn" class="submit-btn">Submit Return Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <script src="/routes/manipulateUI/cashier/cashierUI.js"></script>
+</body>
+</html>

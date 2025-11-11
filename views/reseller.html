@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseller Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design/reseller.css">
+</head>
+<body>
+  <div id="loading-screen">
+    <div class="loader-content">
+      <img src="assets/cros.png" alt="Loading" class="loader-icon" />
+      <p>Baking something sweet...</p>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <h1>DoughMain</h1>
+    <ul class="nav-links">
+      <li><a href="#" class="active" data-page="home">Home</a></li>
+      <li><a href="#" data-page="chat">Chat</a></li>
+      <li><a href="#" data-page="history">Order History</a></li>
+      <li><a href="#" data-page="profile">Profile</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <section id="home" class="page active">
+      <div class="home-header">
+        <div class="welcome-text">
+          <h2 id="welcomeMessage">Welcome, Reseller!</h2>
+          <p>We're glad to have you. Check new announcements below!</p>
+        </div>
+      </div>
+
+      <div class="home-content">
+        <div class="card">
+          <h3>Date Today</h3>
+          <p id="date"></p>
+        </div>
+        <div class="card">
+          <h3>Announcements</h3>
+          <div id="orderUpdates">
+            <p>Loading updates...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="chat" class="page">
+      <div class="chat-container">
+        <div class="chat-messages">
+          <div class="chat-header-bar">
+            <div class="chat-info">
+              <h3>DoughMain Assistant</h3>
+            </div>
+          </div>
+          <div class="messages-container" id="messagesContainer">
+            <div class="message bot-message">
+              <p>👋 Hi Reseller! Do you want to order now?</p>
+              <div class="message-buttons">
+                <button class="quick-reply" data-reply="yes">Yes</button>
+                <button class="quick-reply" data-reply="no">No</button>
+              </div>
+              <div class="message-time">Just now</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-summary">
+          <div class="order-header">
+            <h3>Current Order</h3>
+          </div>
+
+          <div class="order-table-container">
+            <table class="order-table">
+              <thead>
+                <tr>
+                  <th>Bread Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                </tr>
+              </thead>
+              <tbody id="orderItems">
+                <tr>
+                  <td colspan="3" class="empty-order">No items in your order</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="order-bottom-section">
+            <div class="order-total">
+              <p><strong>Total: ₱<span id="orderTotal">0</span></strong></p>
+            </div>
+
+            <div class="order-actions">
+              <button id="placeOrder">Place Order</button>
+              <button id="clearOrder">Clear Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="history" class="page">
+      <div class="history-header">
+        <h2>Order History</h2>
+        <div class="history-controls">
+          <div class="search-box">
+            <input type="text" id="searchOrders" placeholder="Search by product name or order number..." />
+            <span class="search-icon"></span>
+          </div>
+          <div class="sort-controls">
+            <select id="sortBy">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="highest">Highest Amount</option>
+              <option value="lowest">Lowest Amount</option>
+            </select>
+            <select id="filterStatus">
+              <option value="all">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="In Production">In Production</option>
+              <option value="Packed">Packed</option>
+              <option value="Out for Delivery">Out for Delivery</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="order-history-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Bread</th>
+              <th>Quantity</th>
+              <th>Total Amount</th>
+              <th>Date & Time</th>
+              <th>Order Status</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable">
+            <tr>
+              <td colspan="6" style="text-align:center">Loading orders...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="no-orders" id="noOrders" style="display: none;">
+        <p>No orders found matching your criteria.</p>
+      </div>
+    </section>
+
+    <section id="profile" class="page">
+      <div class="profile-container">
+        <div class="profile-card">
+          <div class="avatar-container">
+            <img id="avatarPreview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile" class="avatar" />
+            <div class="avatar-upload">+
+              <input type="file" id="avatarInput" style="display: none;" />
+            </div>
+          </div>
+          <h3 id="profileName">Jane Doe</h3>
+          <p id="profileEmail">jane.doe@example.com</p>
+          <div class="profile-stats">
+            <p><strong>0</strong> Completed Orders</p>
+            <p><strong>₱0.00</strong> Spent</p>
+          </div>
+        </div>
+
+        <div class="profile-info">
+          <h3>Profile Information</h3>
+          
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" class="form-control" />
+          </div>
+          
+          <div class="name-fields" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" class="form-control" required />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" class="form-control" />
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" class="form-control" />
+          </div>
+
+          <h4 style="margin: 25px 0 15px 0; color: var(--primary-dark); border-bottom: 2px solid var(--accent); padding-bottom: 8px;">Delivery Address</h4>
+          
+          <div class="form-group">
+            <label for="province">Province *</label>
+            <select id="province" class="form-control" required>
+              <option value="">Select Province</option>
+              <option value="Bulacan">Bulacan</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="municipality">Municipality/City *</label>
+            <select id="municipality" class="form-control" required>
+              <option value="">Select Municipality</option>
+              <option value="Marilao">Marilao</option>
+              <option value="Malolos">Malolos</option>
+              <option value="Meycauayan">Meycauayan</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="barangay">Barangay *</label>
+            <select id="barangay" class="form-control" required>
+              <option value="">Select Barangay</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="streetName">Street Name *</label>
+            <input type="text" id="streetName" class="form-control" placeholder="e.g., Main Street" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="houseNumber">House/Building Number *</label>
+            <input type="text" id="houseNumber" class="form-control" placeholder="e.g., 123" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Enter new password" />
+            <small style="color: var(--text-light); font-size: 12px;">Leave blank to keep current password</small>
+          </div>
+          
+          <button id="saveProfile" class="save-btn">Save Changes</button>
+          <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="routes/manipulateUI/reseller/resellerUI.js"></script>
+</body>
+</html>

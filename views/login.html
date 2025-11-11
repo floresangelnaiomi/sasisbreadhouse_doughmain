@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login - SasiVy</title>
+    <link rel="stylesheet" href="/design/login.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+        <div class="container">
+        <!-- LOGIN -->
+       <div class="form-box login">
+  <form id="loginForm" action="/login" method="POST">
+    <h1>Login</h1>
+    <div class="input-box">
+      <input type="text" name="username" placeholder="Username" required>
+      <i class='bx bxs-user'></i>
+    </div>
+    <div class="input-box">
+      <input type="password" name="password" placeholder="Password" required>
+      <i class='bx bxs-lock-alt'></i>
+
+    </div>
+   
+    <button type="submit" class="btn">Login</button>
+  </form>
+</div>
+
+
+    <!-- REGISTER -->
+<div class="form-box register">
+    <form id="registerForm">
+        <h1>Register</h1>
+        <div class="scrollbar">
+            <div class="input-box">
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="tel" id="contact" placeholder="Contact Number" pattern="[0-9]{11}" maxlength="11" required>
+                <i class='bx bxs-phone'></i>
+            </div>
+
+            <div class="province">
+                <select class="province-select" id="province" required>
+                    <option value="" disabled selected>Select Province</option>
+                    <option value="Bulacan">Bulacan</option>
+                </select>
+            </div>
+            <div class="municipality">
+                <select class="municipality-select" id="municipality" required>
+                    <option value="" disabled selected>Select Municipality</option>
+                    <option value="Marilao">Marilao</option>
+                    <option value="Malolos">Malolos</option>
+                    <option value="Meycauayan">Meycauayan</option>
+                </select>
+            </div>
+            <div class="barangay">
+                <select class="barangay-select" id="barangay" required>
+                    <option value="" disabled selected>Select Barangay</option>
+                </select>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="streetName" placeholder="Street Name" required>
+                <i class='bx bxs-map'></i>
+            </div>
+            <div class="input-box">
+                <input type="text" id="houseNumber" placeholder="House/Building Number" required>
+                <i class='bx bxs-building-house'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="terms-container">
+                <input type="checkbox" id="termsCheckbox" class="terms-checkbox" required>
+                <label for="termsCheckbox" class="terms-text">
+                    By signing up you agree to our 
+                    <span class="terms-link" onclick="showTerms()">Terms and Conditions</span> 
+                    and 
+                    <span class="terms-link" onclick="showPrivacy()">Privacy Policy</span>.
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+        </div>
+    </form>
+</div>
+
+        <!-- TOGGLE PANELS -->
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+                <button class="back-btn" onclick="location.href='/views/index.html'">⬅</button>
+            </div>
+
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+                <button class="back-btn" onclick="location.href='/views/index.html'">⬅</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <p id="popup-message"></p>
+            <button id="closePopup">OK</button>
+        </div>
+    </div>
+
+
+    <script src="/routes/manipulateUI/login-n-landing/login.js"></script>
+  </body>
+</html>
