@@ -3,17 +3,25 @@ const path = require('path');
 const mysql = require('mysql2');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Updated Database Configuration for TiDB Cloud
 const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'DoughMain_Database',
+  host: process.env.DB_HOST || 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
+  user: process.env.DB_USER || '3a7DPdDCMdfQWY3.root',
+  password: process.env.DB_PASSWORD || 'ao2rp0YULXi6UAi8',
+  database: process.env.DB_NAME || 'DoughMain_Database',
+  port: process.env.DB_PORT || 4000,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: fs.readFileSync(process.env.DB_SSL_CA || '/etc/ssl/certs/ca-certificates.crt')
+  }
 });
 
 db.getConnection((err, connection) => {
@@ -24,6 +32,7 @@ db.getConnection((err, connection) => {
     connection.release();
   }
 });
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
