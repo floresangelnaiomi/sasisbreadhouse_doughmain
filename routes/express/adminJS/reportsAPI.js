@@ -106,15 +106,16 @@ module.exports = (db) => {
       }
 
       const query = `
-        SELECT 
-          DATE_FORMAT(order_date, '${dateFormat}') as period_label,
-          COALESCE(SUM(total_amount), 0) as sales_amount,
-          COUNT(*) as order_count
-        FROM TBL_Orders 
-        WHERE order_status = 'Completed' 
-          AND order_date >= DATE_SUB(CURDATE(), INTERVAL ${interval} ${getIntervalUnit(period)})
-        GROUP BY ${groupBy}
-          ORDER BY ${groupBy} ASC  
+         SELECT 
+        ${groupBy} as period_value,
+        DATE_FORMAT(MIN(order_date), '${dateFormat}') as period_label,
+        COALESCE(SUM(total_amount), 0) as sales_amount,
+        COUNT(*) as order_count
+      FROM TBL_Orders 
+      WHERE order_status = 'Completed' 
+        AND order_date >= DATE_SUB(CURDATE(), INTERVAL ${interval} ${getIntervalUnit(period)})
+      GROUP BY ${groupBy}
+      ORDER BY ${groupBy} ASC 
       `;
       
       const [results] = await db.promise().query(query);
