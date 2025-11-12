@@ -86,7 +86,7 @@ router.get('/sales-trend', async (req, res) => {
         break;
       case 'month':
         groupBy = "YEARWEEK(order_date)";
-        dateFormat = "'Week '", "WEEK(order_date)";
+        dateFormat = "'Week ', WEEK(order_date)";
         interval = 4;
         break;
       case 'quarter':
@@ -101,7 +101,7 @@ router.get('/sales-trend', async (req, res) => {
         break;
       default:
         groupBy = "YEARWEEK(order_date)";
-        dateFormat = "'Week '", "WEEK(order_date)";
+        dateFormat = "'Week ', WEEK(order_date)";  
         interval = 4;
     }
 
