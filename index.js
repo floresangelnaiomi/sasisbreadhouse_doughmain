@@ -8,7 +8,6 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Updated Database Configuration for TiDB Cloud
 const db = mysql.createPool({
   host: process.env.DB_HOST || 'gateway01.ap-southeast-1.prod.aws.tidbcloud.com',
   user: process.env.DB_USER || '3a7DPdDCMdfQWY3.root',
@@ -21,6 +20,9 @@ const db = mysql.createPool({
   ssl: {
     rejectUnauthorized: true,
     ca: fs.readFileSync(process.env.DB_SSL_CA || '/etc/ssl/certs/ca-certificates.crt')
+  },
+  queryFormat: (query, values) => {
+    return mysql.format(query, values);
   }
 });
 
