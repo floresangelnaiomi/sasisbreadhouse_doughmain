@@ -73,40 +73,40 @@ module.exports = (db) => {
   });
 
   
-  router.get('/sales-trend', async (req, res) => {
-    try {
-      const period = req.query.period || 'month';
-      
-      let groupBy, dateFormat, interval;
-      switch(period) {
-        case 'week':
-          groupBy = "DAY(order_date)";
-          dateFormat = "%a";
-          interval = 7;
-          break;
-        case 'month':
-          groupBy = "WEEK(order_date)";
-          dateFormat = "Week %u";
-          interval = 4;
-          break;
-        case 'quarter':
-          groupBy = "MONTH(order_date)";
-          dateFormat = "%b";
-          interval = 3;
-          break;
-        case 'year':
-          groupBy = "MONTH(order_date)";
-          dateFormat = "%b";
-          interval = 12;
-          break;
-        default:
-          groupBy = "WEEK(order_date)";
-          dateFormat = "Week %u";
-          interval = 4;
-      }
+router.get('/sales-trend', async (req, res) => {
+  try {
+    const period = req.query.period || 'month';
+    
+    let groupBy, dateFormat, interval;
+    switch(period) {
+      case 'week':
+        groupBy = "DATE(order_date)";
+        dateFormat = "%a";
+        interval = 7;
+        break;
+      case 'month':
+        groupBy = "YEARWEEK(order_date)";
+        dateFormat = "'Week '", "WEEK(order_date)";
+        interval = 4;
+        break;
+      case 'quarter':
+        groupBy = "DATE_FORMAT(order_date, '%Y-%m')";
+        dateFormat = "%b";
+        interval = 3;
+        break;
+      case 'year':
+        groupBy = "DATE_FORMAT(order_date, '%Y-%m')";
+        dateFormat = "%b";
+        interval = 12;
+        break;
+      default:
+        groupBy = "YEARWEEK(order_date)";
+        dateFormat = "'Week '", "WEEK(order_date)";
+        interval = 4;
+    }
 
-      const query = `
-         SELECT 
+    const query = `
+      SELECT 
         ${groupBy} as period_value,
         DATE_FORMAT(MIN(order_date), '${dateFormat}') as period_label,
         COALESCE(SUM(total_amount), 0) as sales_amount,
@@ -115,21 +115,20 @@ module.exports = (db) => {
       WHERE order_status = 'Completed' 
         AND order_date >= DATE_SUB(CURDATE(), INTERVAL ${interval} ${getIntervalUnit(period)})
       GROUP BY ${groupBy}
-      ORDER BY ${groupBy} ASC 
-      `;
-      
-      const [results] = await db.promise().query(query);
-      res.json(results);
-      
-    } catch (error) {
-      console.error('❌ Database error in sales-trend:', error);
-      res.status(500).json({ 
-        error: 'Failed to fetch sales trend', 
-        details: error.message 
-      });
-    }
-  });
-
+      ORDER BY MIN(order_date) ASC
+    `;
+    
+    const [results] = await db.promise().query(query);
+    res.json(results);
+    
+  } catch (error) {
+    console.error('❌ Database error in sales-trend:', error);
+    res.status(500).json({ 
+      error: 'Failed to fetch sales trend', 
+      details: error.message 
+    });
+  }
+});
  
   router.get('/customer-types', async (req, res) => {
     try {
