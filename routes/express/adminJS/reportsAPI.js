@@ -114,7 +114,7 @@ module.exports = (db) => {
         WHERE order_status = 'Completed' 
           AND order_date >= DATE_SUB(CURDATE(), INTERVAL ${interval} ${getIntervalUnit(period)})
         GROUP BY ${groupBy}
-        ORDER BY order_date ASC
+          ORDER BY ${groupBy} ASC  
       `;
       
       const [results] = await db.promise().query(query);
